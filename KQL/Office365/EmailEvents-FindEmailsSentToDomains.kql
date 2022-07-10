@@ -1,0 +1,7 @@
+//Find when your users are sending to set domain addresses
+
+let DomainSearch=dynamic(['gmail.com', 'yahoo.com']);
+EmailEvents
+| extend RecipentDomain = substring(RecipientEmailAddress, indexof(RecipientEmailAddress,"@")+1,strlen(RecipientEmailAddress))
+| where RecipentDomain has_any (DomainSearch)
+| project RecipentDomain, RecipientEmailAddress, SenderFromAddress, Subject

@@ -1,0 +1,5 @@
+//Find when a user has DisableRealtimeMonitoring on a workstation. 
+
+DeviceRegistryEvents
+| where ActionType ==  "RegistryValueSet" and RegistryValueName  == "DisableRealtimeMonitoring"
+| project DeviceName, ActionType, Timestamp, RegistryValueName, RegistryValueData, PreviousRegistryValueData
