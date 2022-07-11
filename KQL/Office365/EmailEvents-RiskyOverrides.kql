@@ -1,0 +1,23 @@
+//risky overrides
+EmailEvents
+|where OrgLevelAction <> ""
+| summarize count() by OrgLevelAction, OrgLevelPolicy
+
+//MDO Org overrides
+EmailEvents
+| where EmailDirection  == "Inbound"
+| where Connectors == ""
+| summarize count() by EmailDirection, OrgLevelAction, OrgLevelPolicy
+
+// Domains being allowed
+EmailEvents
+| where EmailDirection  == "Inbound"
+| where Connectors == ""
+| where OrgLevelAction == "Allow"
+|summarize count() by SenderFromDomain
+
+//User Level overrides
+EmailEvents
+| where EmailDirection  == "Inbound"
+| where Connectors == ""
+| summarize count() by EmailDirection, UserLevelAction, UserLevelPolicy
