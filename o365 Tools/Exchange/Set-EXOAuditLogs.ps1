@@ -2,7 +2,7 @@ Import-Module $((Get-ChildItem -Path $($env:LOCALAPPDATA + "\Apps\2.0\") -Filter
 $EXOSession = New-ExoPSSession -UserPrincipalName $UPN
 Import-PSSession $EXOSession -AllowClobber
 
-Get-Mailbox doug@dougsbaker.com | set-mailbox -Auditadmin @{Add="MailItemsAccessed"} -AuditOwner @{Add="MailItemsAccessed"} -Auditdelegate @{Add="MailItemsAccessed"}
+Get-Mailbox user@dougsbaker.com | set-mailbox -Auditadmin @{Add="MailItemsAccessed"} -AuditOwner @{Add="MailItemsAccessed"} -Auditdelegate @{Add="MailItemsAccessed"}
 
 #KB Articvle
 #https://docs.microsoft.com/en-us/microsoft-365/compliance/enable-mailbox-auditing?view=o365-worldwide#mailbox-actions-for-user-mailboxes-and-shared-mailboxes
@@ -28,7 +28,7 @@ Get-Mailbox -ResultSize Unlimited | select Name, email, AuditEnabled, AuditLogAg
 #Double-Check It!
 Get-Mailbox -ResultSize Unlimited | Select DefaultAuditSet  -ExpandProperty auditowner   | Out-Gridview
 
-Get-Mailbox dbaker@travismathew.com | select -ExpandProperty auditowner
+Get-Mailbox user@dougsbaker.com | select -ExpandProperty auditowner
 
 #Secure Auidit Script to check
 Get-Mailbox -ResultSize Unlimited -Filter {RecipientTypeDetails -eq "UserMailbox"} | group  auditdelegate | sort-object count | fl Count,Name
