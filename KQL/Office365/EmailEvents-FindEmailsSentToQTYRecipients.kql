@@ -1,0 +1,4 @@
+// Find Emails sent to a certain Qty of RecipientEmailAddress
+EmailEvents
+| summarize count() by  NetworkMessageId, SenderFromAddress, Subject
+| where count_ >= 2 //change Qty
