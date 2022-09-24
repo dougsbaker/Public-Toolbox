@@ -1,0 +1,20 @@
+<EdmSchema xmlns="http://schemas.microsoft.com/office/2018/edm">
+      <DataStore name="DLPTestSchema" description="Schema for DLPTestSchema records" version="1">
+            <Field name="SSN" searchable="true" ignoredDelimiters="-,/,*,#,^" />
+			<Field name="gender" />
+			<Field name="birthdate" />
+			<Field name="maidenName" caseInsensitive="true"  />
+			<Field name="lastName" caseInsensitive="true"  />
+			<Field name="firstName" caseInsensitive="true"  />
+			<Field name="address" caseInsensitive="true"  />
+			<Field name="city" caseInsensitive="true"  />
+			<Field name="state" />
+			<Field name="zip" /> 
+			<Field name="phone" />
+			<Field name="email" caseInsensitive="true"  />
+			<Field name="ccType" />
+			<Field name="CCN" searchable="true" ignoredDelimiters="-,/,*,#,^"/>
+			<Field name="CCcvc" />
+			<Field name="CCExpiredate" />
+      </DataStore>
+</EdmSchema>a
