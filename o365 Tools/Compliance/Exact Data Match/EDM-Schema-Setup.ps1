@@ -10,4 +10,3 @@ New-DlpEdmSchema -FileData $edmSchemaXml -Confirm:$true
 Set-DlpEdmSchema -FileData $edmSchemaXml -Confirm:$true
 #Get
 Get-DlpEdmSchema
-
