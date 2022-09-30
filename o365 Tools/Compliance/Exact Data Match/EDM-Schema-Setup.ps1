@@ -10,3 +10,13 @@ New-DlpEdmSchema -FileData $edmSchemaXml -Confirm:$true
 Set-DlpEdmSchema -FileData $edmSchemaXml -Confirm:$true
 #Get
 Get-DlpEdmSchema
+
+
+
+#Setup ALERTS
+Connect-IPPSSession
+#Upload Complete
+New-ProtectionAlert -Name "EdmUploadCompleteAlertPolicy" -Category Others -NotifyUser "<address to send notification to>" -ThreatType Activity -Operation UploadDataCompleted -Description "Custom alert policy to track when EDM upload Completed" -AggregationType None
+#Uplaod Failed
+New-ProtectionAlert -Name "EdmUploadFailAlertPolicy" -Category Others -NotifyUser "<SMTP address to send notification to>" -ThreatType Activity -Operation UploadDataFailed -Description "Custom alert policy to track when EDM upload Failed" -AggregationType None -Severity High
+
