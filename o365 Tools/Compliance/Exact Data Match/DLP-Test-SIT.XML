@@ -1,0 +1,58 @@
+<RulePackage xmlns="http://schemas.microsoft.com/office/2018/edm">
+   <RulePack id="00710036-9958-4382-bc11-6cb28ea1acb0">
+     <Version build="0" major="2" minor="0" revision="0" />
+     <Publisher id="df19a652-b21d-4f4e-b930-8d26c32cc027" />
+     <Details defaultLangCode="en-us">
+       <LocalizedDetails langcode="en-us">
+         <PublisherName>Doug Does Tech</PublisherName>
+         <Name>DLPTest Rule Pack</Name>
+         <Description>This rule package contains the DLPTEST.com EDM sensitive type for our Demo.</Description>
+       </LocalizedDetails>
+     </Details>
+   </RulePack>
+   <Rules>
+     <ExactMatch id = "9b2ac5b0-16cf-4055-b3b4-156a03df5f07" patternsProximity = "300" dataStore ="DLPTestSchema" recommendedConfidence = "65" >
+       <Pattern confidenceLevel="65">
+         <idMatch matches = "SSN" classification = "U.S. Social Security Number (SSN)" />
+       </Pattern>
+       <Pattern confidenceLevel="75">
+         <idMatch matches = "SSN" classification = "U.S. Social Security Number (SSN)" />
+         <Any minMatches ="0" maxMatches ="6">
+           <match matches="lastName" />
+           <match matches="firstName"/>
+           <match matches="address"/>
+           <match matches="birthdate"/>
+           <match matches="phone"/>
+           <match matches="email"/>
+         </Any>
+       </Pattern>
+     </ExactMatch>
+     <ExactMatch id = "4f070938-0d94-414d-9730-bb57e15ff706" patternsProximity = "300" dataStore ="DLPTestSchema" recommendedConfidence = "65" >
+       <Pattern confidenceLevel="65">
+         <idMatch matches = "CCN" classification = "Credit Card Number" />
+       </Pattern>
+       <Pattern confidenceLevel="75">
+         <idMatch matches = "CCN" classification = "Credit Card Number" />
+         <Any minMatches ="0" maxMatches ="6">
+            <match matches="lastName"/>
+            <match matches="firstName"/>
+            <match matches="address"/>
+            <match matches="phone"/>
+            <match matches="email"/>
+            <match matches="CCcvc"/>
+            <match matches="CCExpiredate"/>
+         </Any>
+       </Pattern>
+     </ExactMatch>
+     <LocalizedStrings>
+       <Resource idRef="9b2ac5b0-16cf-4055-b3b4-156a03df5f07">
+         <Name default="true" langcode="en-us">EDM-SSN-DLPTEST</Name>
+         <Description default="true" langcode="en-us">EDM Sensitive type for detecting Patient SSN.</Description>
+       </Resource>
+       <Resource idRef="4f070938-0d94-414d-9730-bb57e15ff706">
+         <Name default="true" langcode="en-us">EDM-CCN-DLPTEST</Name>
+         <Description default="true" langcode="en-us">EDM Sensitive type for detecting Patient CCN.</Description>
+       </Resource>
+     </LocalizedStrings>
+   </Rules>
+</RulePackage>
