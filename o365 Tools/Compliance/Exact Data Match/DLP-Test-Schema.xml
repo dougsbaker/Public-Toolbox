@@ -17,4 +17,4 @@
 			<Field name="CCcvc" />
 			<Field name="CCExpiredate" />
       </DataStore>
-</EdmSchema>a
+</EdmSchema>
