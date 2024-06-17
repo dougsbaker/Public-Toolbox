@@ -5,12 +5,6 @@
 $FormatEnumerationLimit = -1
 Get-Mailbox -ResultSize Unlimited | select Name, PrimarySmtpAddress , RecipientTypeDetails, SKUAssigned, AuditEnabled, DefaultAuditSet, AuditLogAgeLimit, Auditowner, auditdelegate, AuditAdmin | Out-GridView
 
-
-
-# add 1 record for a single user
-Get-Mailbox user@dougsbaker.com | set-mailbox -Auditadmin @{Add = "MailItemsAccessed" } -AuditOwner @{Add = "MailItemsAccessed" } -Auditdelegate @{Add = "MailItemsAccessed" }
-
-
 #Enable global audit logging
 Get-Mailbox -ResultSize Unlimited -Filter `
 { RecipientTypeDetails -eq "UserMailbox" -or RecipientTypeDetails -eq "SharedMailbox" -or RecipientTypeDetails -eq "RoomMailbox" -or RecipientTypeDetails -eq "DiscoveryMailbox" } `
@@ -32,6 +26,9 @@ Get-Mailbox -ResultSize Unlimited -Filter  | Select PrimarySmtpAddress `
   Set-Mailbox -Identity $_.PrimarySmtpAddress -DefaultAuditSet Admin, Delegate, Owner
 }
 
+
+# add 1 record for a single user
+Get-Mailbox user@dougsbaker.com | set-mailbox -Auditadmin @{Add = "MailItemsAccessed" } -AuditOwner @{Add = "MailItemsAccessed" } -Auditdelegate @{Add = "MailItemsAccessed" }
 
 #Audit Quick
 Get-Mailbox -ResultSize Unlimited -Filter { RecipientTypeDetails -eq "UserMailbox" } | group  auditdelegate | sort-object count | fl Count, Name
