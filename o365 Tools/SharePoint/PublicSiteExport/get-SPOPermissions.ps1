@@ -3,6 +3,7 @@
 Get-Module -Name Microsoft.Online.SharePoint.PowerShell -ListAvailable | Select Name, Version
 
 $tenantURL = "https://dougsbaker-admin.sharepoint.com"
+$UserEmail = "doug@dougsbaker.com" #Admin Account that is being used. 
 Connect-SPOService -Url $tenantURL
 
 
@@ -35,6 +36,16 @@ $Sites = Get-SPOSite -Limit ALL
 # Iterate through each site collection
 foreach ($Site in $Sites) {
     # Get all users in the site collection
+    try {
+        $Users = Get-SPOUser -Limit ALL -Site $Site.Url -not
+    }
+    catch {
+        Write-Host "Granting Permision to site for permission check"
+        Set-SPOUser -Site $Site.Url -LoginName $UserEmail -IsSiteCollectionAdmin $true
+        $Users = Get-SPOUser -Limit ALL -Site $Site.Url
+        Set-SPOUser -Site $Site.Url -LoginName $UserEmail -IsSiteCollectionAdmin $false
+
+    }
     $Users = Get-SPOUser -Limit ALL -Site $Site.Url
     $UserCount = 0
     
@@ -43,7 +54,7 @@ foreach ($Site in $Sites) {
 
     foreach ($User in $Users) {
         if ($User.Groups) {
-            Write-Host "it's a Group" -ForegroundColor Green 
+            Write-Host "it's a Group $($User.DisplayName)" -ForegroundColor Green 
             $Report += New-Object PSObject -Property @{
                 'Site'         = $Site.Url
                 'Display Name' = $User.DisplayName
@@ -53,7 +64,7 @@ foreach ($Site in $Sites) {
             }
         }
         elseif (-not $User.IsGroup) {
-            Write-Host "it's a user" -ForegroundColor Green 
+            Write-Host "it's a user $($User.DisplayName)" -ForegroundColor Green 
             $UserCount++
             $Report += New-Object PSObject -Property @{
                 'Site'         = $Site.Url
@@ -64,7 +75,7 @@ foreach ($Site in $Sites) {
             }
         }
         else { 
-            Write-Host "it's something else" -ForegroundColor Red
+            Write-Host "it's something else $($User.DisplayName)" -ForegroundColor Red
         }
     }
 
